@@ -1,6 +1,7 @@
 {
   "name": "rock-bands",
   "version": "0.0.0",
+  "author": "Nestor Edrev",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
