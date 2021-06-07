@@ -36,7 +36,9 @@ import { DomseguroPipe } from './pipes/domseguro.pipe';
     BrowserAnimationsModule,
     AppRoutingModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
