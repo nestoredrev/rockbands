@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
 
     if( localStorage.getItem('bands') ) {
-      this.dataSource = new MatTableDataSource( JSON.parse(localStorage.getItem('bands')) );
+      this.dataSource = new MatTableDataSource( this.bandsService.getLocalStorage() );
     } else {
       this.getDataBands();
     }
@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
 
   }
 
-  applyFilter(event: Event) {
+  applyFilter( event: Event ) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
@@ -66,15 +66,14 @@ export class HomeComponent implements OnInit {
 
   deleteBand( id:string ) {
 
-    const dataBand: Band[] = JSON.parse(localStorage.getItem('bands'));
+    const dataBand: Band[] = this.bandsService.getLocalStorage();
     const index = dataBand.findIndex( element => element.id == id);
     
     dataBand.splice(index, 1);
 
-    localStorage.setItem('bands', JSON.stringify(dataBand));
+    this.bandsService.setLocalStorage(dataBand);
 
-    this.dataSource =  new MatTableDataSource( JSON.parse(localStorage.getItem('bands')) );
-  
+    this.dataSource =  new MatTableDataSource( this.bandsService.getLocalStorage() );
   }
 
 }

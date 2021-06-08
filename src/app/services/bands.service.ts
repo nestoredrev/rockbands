@@ -14,11 +14,20 @@ export class BandsService {
 
   getBands():Observable<Band[]> {
     return this.http.get<Band[]>("../assets/mocks/bandsDefault.json").pipe(
-      map( res => {
-        localStorage.setItem('bands', JSON.stringify(res));
+      map( (res:Band[]) => {
+        //localStorage.setItem('bands', JSON.stringify(res));
+        this.setLocalStorage(res);
         return res;
       })
     )
+  }
+
+  getLocalStorage():Band[] {
+    return JSON.parse(localStorage.getItem('bands'));
+  }
+
+  setLocalStorage( dataBand:Band[] ) {
+    localStorage.setItem('bands', JSON.stringify( dataBand ));
   }
 
 }

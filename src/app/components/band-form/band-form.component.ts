@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Band } from 'src/app/interfaces/band';
 import { Router } from '@angular/router';
+import { BandsService } from 'src/app/services/bands.service';
 
 @Component({
   selector: 'app-band-form',
@@ -19,7 +20,9 @@ export class BandFormComponent implements OnInit {
   // Autoajuste para el textArea
   @ViewChild('autosize',{static:false}) autosize: CdkTextareaAutosize;
 
-  constructor( private formBuild: FormBuilder, private router: Router ) { }
+  constructor( private formBuild: FormBuilder, 
+               private router: Router,
+               private bandsService: BandsService ) { }
 
   ngOnInit(): void {
     this.createFormBand();
@@ -27,7 +30,6 @@ export class BandFormComponent implements OnInit {
     if(this.bandEdit) {
       this.initFormBand();
     }
-
   }
 
   createFormBand() {
@@ -59,7 +61,7 @@ export class BandFormComponent implements OnInit {
 
   onSubmit() {
     const newBand = this.formAddBand.value;
-    const actualyBands: Band[] = JSON.parse(localStorage.getItem('bands'));
+    const actualyBands: Band[] = this.bandsService.getLocalStorage();
     const newId = actualyBands.length + 1;
 
     // Editar
@@ -72,7 +74,7 @@ export class BandFormComponent implements OnInit {
       newBand.id = id;
       newBand.miembros = this.miembros;
       actualyBands.push(newBand);
-      localStorage.setItem('bands', JSON.stringify(actualyBands));
+      this.bandsService.setLocalStorage(actualyBands);
       this.router.navigateByUrl('/');  
 
     } else {
@@ -80,10 +82,8 @@ export class BandFormComponent implements OnInit {
       newBand.id = newId;
       newBand.miembros = this.miembros;
       actualyBands.push(newBand);
-      localStorage.setItem('bands', JSON.stringify(actualyBands));
+      this.bandsService.setLocalStorage(actualyBands);
       this.router.navigateByUrl('/');  
     } 
-    
-
   }
 }

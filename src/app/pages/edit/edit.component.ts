@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Band } from '../../interfaces/band';
+import { BandsService } from '../../services/bands.service';
 
 @Component({
   selector: 'app-edit',
@@ -11,13 +12,13 @@ export class EditComponent implements OnInit {
 
   findBand: Band;
 
-  constructor(private activatedRoute: ActivatedRoute) { }
+  constructor(private activatedRoute: ActivatedRoute, private bandsService: BandsService) { }
 
   ngOnInit(): void {
     
     const { id } = this.activatedRoute.snapshot.params;
-    const getBands = JSON.parse(localStorage.getItem('bands'));
-    this.findBand = getBands.find( element => element.id == id);
+    const getBands = this.bandsService.getLocalStorage();
+    this.findBand = getBands.find( (element:Band) => element.id == id);
   }
 
 }
