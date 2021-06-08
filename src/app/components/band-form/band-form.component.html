@@ -1,0 +1,105 @@
+<form [formGroup]="formAddBand" (ngSubmit)="onSubmit()" class="example-form" novalidate>
+      
+    <!-- Band name -->
+    
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label> Band Name * </mat-label>
+      <input matInput 
+            type="text"
+            formControlName="nombre">
+            <mat-icon *ngIf="formAddBand.get('nombre').valid && formAddBand.get('nombre').touched" matSuffix>sentiment_very_satisfied</mat-icon>
+            <mat-icon *ngIf="formAddBand.get('nombre').invalid && formAddBand.get('nombre').touched" matSuffix>sentiment_very_dissatisfied</mat-icon>
+            <mat-error *ngIf="formAddBand.get('nombre').hasError('required') && formAddBand.get('nombre').touched">
+              Field  <strong>required</strong>
+            </mat-error>
+    </mat-form-field>
+
+    <!-- Origin -->
+
+    <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label> Origin </mat-label>
+        <input matInput 
+                type="text"
+                formControlName="origen">
+    </mat-form-field>
+
+    <!-- Period -->
+
+    <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label> Period of activity </mat-label>
+        <input matInput 
+                type="text"
+                formControlName="periodo">
+    </mat-form-field>
+
+    <!-- Add member -->
+
+    <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label> Member </mat-label>
+        <input matInput 
+                type="text"
+                #addInputMember>
+        <button mat-icon-button matSuffix color="primary" (click)="addMember($event, addInputMember.value)">
+            <mat-icon>add_circle</mat-icon>
+        </button>
+    </mat-form-field>
+
+    <br><br>
+
+    <!-- List members -->
+
+    <mat-list>
+        <div mat-subheader>Members</div>
+        <mat-list-item *ngFor="let miembro of miembros; let idx = index">
+          <div mat-line> 
+            <button mat-icon-button matSuffix color="warn" (click)="deleteMember(idx)">
+                <mat-icon>remove_circle</mat-icon>
+            </button>
+            {{ miembro }}
+          </div>
+        </mat-list-item>
+    </mat-list>
+
+    <br><br>
+
+    <!-- Youtube Id -->
+
+    <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label> YouTube Id </mat-label>
+        <input matInput 
+                type="text"
+                formControlName="youtubeId">
+                <mat-hint align="start"><strong>The id is 11 Characters </strong> </mat-hint>
+                <mat-error *ngIf="formAddBand.get('youtubeId').hasError('maxlength') && formAddBand.get('youtubeId').touched">
+                    To much characters
+                </mat-error>
+    </mat-form-field>
+
+    <!-- Description -->
+
+    <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput
+                    cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="10"
+                    cdkAutosizeMaxRows="30"
+                    maxlength="256"
+                    formControlName="descripcion">
+        </textarea>
+        <mat-hint align="start"><strong>Characters used</strong> </mat-hint>
+        <mat-hint align="end">{{formAddBand.get('descripcion').value?.length || 0}} / 256</mat-hint>
+        <mat-error *ngIf="formAddBand.get('descripcion').hasError('maxlength') && formAddBand.get('descripcion').touched">
+            To much characters
+        </mat-error>
+        </mat-form-field>
+
+    <button 
+        type="submit" 
+        class="float-right" 
+        mat-raised-button 
+        color="primary"
+        [disabled]="formAddBand.invalid"> Save <mat-icon>save</mat-icon>
+    </button>
+
+</form>

@@ -15,6 +15,9 @@ import { NoFoundComponent } from './pages/no-found/no-found.component';
 import { AddBandComponent } from './pages/add-band/add-band.component';
 import { EditComponent } from './pages/edit/edit.component';
 
+// Components
+import { BandFormComponent } from './components/band-form/band-form.component';
+
 // Angular Material
 import { MaterialModule } from './material.module';
 
@@ -29,7 +32,8 @@ import { DomseguroPipe } from './pipes/domseguro.pipe';
     NoFoundComponent,
     AddBandComponent,
     DomseguroPipe,
-    EditComponent
+    EditComponent,
+    BandFormComponent
   ],
   imports: [
     BrowserModule,

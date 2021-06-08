@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Band } from '../../interfaces/band';
 
 @Component({
   selector: 'app-edit',
@@ -8,13 +9,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class EditComponent implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router) { }
+  findBand: Band;
+
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     
     const { id } = this.activatedRoute.snapshot.params;
-    
-
+    const getBands = JSON.parse(localStorage.getItem('bands'));
+    this.findBand = getBands.find( element => element.id == id);
   }
 
 }
